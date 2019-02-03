@@ -1,0 +1,25 @@
+[package]
+name = "jos"
+version = "0.1.0"
+authors = ["Joseph Teague <joe@joeteague.net>"]
+edition = "2018"
+
+[profile.dev]
+lto = false
+panic = "abort"
+
+[profile.release]
+lto = true
+panic = "abort"
+
+[lib]
+crate-type = ["staticlib"]
+
+[dependencies]
+#rlibc = "1.0"
+#compiler_builtins = { git = "https://github.com/rust-lang-nursery/compiler-builtins" }
+
+[features]
+x86 = []
+has_screen = []
+text_mode = []

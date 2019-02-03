@@ -1,0 +1,25 @@
+{    
+    "data-layout": "e-m:e-p:32:32-f64:32:64-f80:32-n8:16:32-S128",
+    "llvm-target": "i686-unknown-linux-gnu",
+    "target-endian": "little",
+    "target-pointer-width": "32",
+    "target-c-int-width": "32",
+    "os": "none",
+    "executables": true,
+    "arch": "x86",
+    "cpu": "i686",
+    "target-env": "gnu",
+    "linker": "i686-elf-gcc",
+    "linker-flavor": "gcc",
+    "features": "-mmx,-sse,-sse2,-sse3,-ssse3,-sse4.1,-sse4.2,-3dnow,-3dnowa,-avx,-avx2",
+    "disable-redzone": true,
+    "eliminate-frame-pointer": true,
+    "linker-is-gnu": true,
+    "no-compiler-rt": true,
+    "archive-format": "gnu",
+    "pre-link-args" : {
+        "gcc": [ "-m32", "-march=i686", "-Wl,-m elf_i386", "-no-pic" ]
+    },
+    "relocation-model": "static",
+    "no-compiler-rt": "true"
+}
