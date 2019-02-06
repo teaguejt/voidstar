@@ -3,6 +3,8 @@
 
 #[macro_use]
 mod screen;
+#[cfg(feature="x86")]
+mod i386;
 
 use core::fmt::Write;
 
@@ -27,6 +29,10 @@ fn panic(_info: &core::panic::PanicInfo) -> ! {
 #[no_mangle]
 pub extern "C" fn _kmain() -> ! {
     let mut k_screen_buffer = screen::ScreenBuffer::new();
+    let mut r: i386::registers_t;
+    unsafe {
+        i386::__asm_getreg(&r);
+    }
     k_screen_buffer.set_fmt(10, 0);
     write!(&mut k_screen_buffer, "{}\n", OSNAME);
     

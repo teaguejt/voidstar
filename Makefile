@@ -1,5 +1,6 @@
 BL_SOURCE   = startup/i386
-ASSEMBLY    = $(wildcard i386/*.asm)
+ASSEMBLY    = $(wildcard asm/i386/*.asm)
+ASM_ELF		= ${ASSEMBLY:.asm=.elf}
 ASM_OBJ     = ${ASSEMBLY:.asm=.o}
 
 CC  = i686-elf-gcc
@@ -17,8 +18,11 @@ XARGOFLAGS= --target i686-custom --release \
 
 all: run_i386
 
-kernel.bin: boot3.o xargokern
-	${CC} ${CFLAGS} $< -o ${KBIN}  -lgcc -ljos
+kernel.bin: boot3.o ${ASM_ELF} xargokern
+	${CC} ${CFLAGS} $< ${ASM_ELF} -o ${KBIN}  -lgcc -ljos
+
+%.elf: %.asm ${ASSEMBLY}
+	nasm $< -f elf -o $@
 
 boot3.o: ${BL_SOURCE}/boot3.asm
 	nasm $< -f elf -o $@
