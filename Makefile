@@ -1,10 +1,5 @@
 BL_SOURCE   = startup/i386
-C_SOURCE    = $(wildcard kernel/*.c screen/*.c io/*.c string/*.c i386/*.c mm/*.c)
 ASSEMBLY    = $(wildcard i386/*.asm)
-HEADERS     = $(wildcard kernel/*.h screen/*.h io/*.h)
-INCLUDE     = $(shell pwd)/include/
-OBJ         = ${C_SOURCE:.c=.o}
-ASM_ELF     = ${ASSEMBLY:.asm=.elf}
 ASM_OBJ     = ${ASSEMBLY:.asm=.o}
 
 CC  = i686-elf-gcc
