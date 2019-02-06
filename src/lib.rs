@@ -4,6 +4,8 @@
 #[macro_use]
 mod screen;
 
+use core::fmt::Write;
+
 static OSNAME: &str = &"(void *)OS";
 static OSVERSION: &str = &" 0.1";
 
@@ -24,24 +26,14 @@ fn panic(_info: &core::panic::PanicInfo) -> ! {
 
 #[no_mangle]
 pub extern "C" fn _kmain() -> ! {
-    let k_screen_buffer = screen::ScreenBuffer::new();
+    let mut k_screen_buffer = screen::ScreenBuffer::new();
+    k_screen_buffer.set_fmt(10, 0);
+    write!(&mut k_screen_buffer, "{}\n", OSNAME);
     
-    /*for c in "Welcome to ".chars() {
-        screen::write(c);
-    }*/
-    k_screen_buffer.write_str("Welcome to ");
-    //k_screen_buffer.write_str(OSNAME);
+    k_screen_buffer.reset_fmt();
 
+    write!(&mut k_screen_buffer, "Test {}", 1);
     loop {}
-}
-
-fn quick_return(x: u32) -> Result<(), ()> {
-    if x == 1 {
-        Ok(())
-    }
-    else {
-        Err(())
-    }
 }
 
 #[cfg(test)]

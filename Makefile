@@ -1,10 +1,11 @@
-C_SOURCE = $(wildcard kernel/*.c screen/*.c io/*.c string/*.c i386/*.c mm/*.c)
-ASSEMBLY = $(wildcard i386/*.asm)
-HEADERS  = $(wildcard kernel/*.h screen/*.h io/*.h)
-INCLUDE  = $(shell pwd)/include/
-OBJ      = ${C_SOURCE:.c=.o}
-ASM_ELF  = ${ASSEMBLY:.asm=.elf}
-ASM_OBJ  = ${ASSEMBLY:.asm=.o}
+BL_SOURCE   = startup/i386
+C_SOURCE    = $(wildcard kernel/*.c screen/*.c io/*.c string/*.c i386/*.c mm/*.c)
+ASSEMBLY    = $(wildcard i386/*.asm)
+HEADERS     = $(wildcard kernel/*.h screen/*.h io/*.h)
+INCLUDE     = $(shell pwd)/include/
+OBJ         = ${C_SOURCE:.c=.o}
+ASM_ELF     = ${ASSEMBLY:.asm=.elf}
+ASM_OBJ     = ${ASSEMBLY:.asm=.o}
 
 CC  = i686-elf-gcc
 LD  = i686-elf-gcc
@@ -24,13 +25,13 @@ all: run_i386
 kernel.bin: boot3.o xargokern
 	${CC} ${CFLAGS} $< -o ${KBIN}  -lgcc -ljos
 
-boot3.o: boot3.asm
+boot3.o: ${BL_SOURCE}/boot3.asm
 	nasm $< -f elf -o $@
 
-boot2.bin: boot2.asm
+boot2.bin: ${BL_SOURCE}/boot2.asm
 	nasm $< -f bin -o $@
 
-boot1.bin: boot1.asm
+boot1.bin: ${BL_SOURCE}/boot1.asm
 	nasm $< -f bin -o $@
 
 xargokern:
